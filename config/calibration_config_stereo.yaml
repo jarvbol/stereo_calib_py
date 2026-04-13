@@ -1,0 +1,73 @@
+# Camera Calibration Configuration
+
+# Calibration Parameters
+calibration:
+  # Checkerboard dimensions
+  checkerboard:
+    rows: 6
+    columns: 9
+    square_size: 0.04  # in meters
+  
+  # Image processing parameters
+  image_processing:
+    resize_factor: 1.0
+    invert: false
+    contrast_alpha: 1.0
+    contrast_beta: 0
+  
+  # Corner detection parameters
+  corner_detection:
+    criteria:
+      term_criteria: ["cv.TERM_CRITERIA_EPS", "cv.TERM_CRITERIA_MAX_ITER"]
+      max_iterations: 100
+      epsilon: 0.001
+    subpix_window_size: 3
+    flags: ["cv.CALIB_CB_ACCURACY"]
+    alt_flags: ["cv.CALIB_CB_EXHAUSTIVE", "cv.CALIB_CB_ACCURACY"]
+  
+  # Calibration algorithm parameters
+  algorithm:
+    calibration_flags: [cv.CALIB_RATIONAL_MODEL]  # e.g. ["cv.CALIB_USE_LU", "cv.CALIB_RATIONAL_MODEL"]
+  
+  # Outlier detection
+  outlier_detection:
+    enabled: true
+    # reprojection_error_threshold: 0.5  # maximum allowed reprojection error
+    reprojection_error_threshold: -1  # -1 = adaptive, >0 = absolute threshold in pixels
+    # max_corner_distance_threshold: 100.0
+  
+  # Corner refinement
+  corner_refinement:
+    enabled: true
+    # ransac_iterations: 100
+    # ransac_threshold: 0.01
+
+  # Save detected corners
+  save_corners: true  # If true, saves detected corner coordinates for both cameras
+
+  output:
+    stereo_filename: 'stereo.npz'
+    report_filename: 'stereo_calibration_report.txt'
+    corners_dir: 'corner_coordinates'
+    debug_cam1_dir: 'camera_0_corners'
+    debug_cam2_dir: 'camera_1_corners'
+    debug_cam1_refined_dir: 'camera_0_refined_corners'
+    debug_cam2_refined_dir: 'camera_1_refined_corners'
+  
+# Visualization Parameters
+visualization:
+  enabled: false
+  delay: 50  # milliseconds between displayed frames
+  save_frames: true
+
+# Debug Parameters
+debug:
+  enabled: true
+  path: "results/debug_visualizations"
+
+# Logging Parameters
+logging:
+  file: 'logs/log_stereo.log'
+  max_bytes: 100000
+  backup_count: 10
+  level: "DEBUG" 

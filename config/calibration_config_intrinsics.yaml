@@ -1,0 +1,71 @@
+# Camera Calibration Configuration
+
+# Calibration Parameters
+calibration:
+  # Checkerboard dimensions
+  checkerboard:
+    rows: 6
+    columns: 9
+    square_size: 0.04  # in meters
+  
+  # Image processing parameters
+  image_processing:
+    resize_factor: 1.0
+    invert: false
+    contrast_alpha: 1.0
+    contrast_beta: 0
+  
+  # Corner detection parameters
+  corner_detection:
+    criteria:
+      term_criteria: ["cv.TERM_CRITERIA_EPS", "cv.TERM_CRITERIA_MAX_ITER"]
+      max_iterations: 100
+      epsilon: 0.001
+    subpix_window_size: 3
+    flags: ["cv.CALIB_CB_ACCURACY"]
+    alt_flags: ["cv.CALIB_CB_EXHAUSTIVE", "cv.CALIB_CB_ACCURACY"]
+  
+  # Calibration algorithm parameters
+  algorithm:
+    calibration_flags: []  # e.g. ["cv.CALIB_USE_LU", "cv.CALIB_RATIONAL_MODEL"]
+
+  
+  # Outlier detection
+  outlier_detection:
+    enabled: true
+    # reprojection_error_threshold: 0.5  # maximum allowed reprojection error
+    reprojection_error_threshold: -1  # -1 = adaptive, >0 = absolute threshold in pixels
+  
+  # Corner refinement
+  corner_refinement:
+    enabled: false
+    ransac_iterations: 100
+    ransac_threshold: 0.01
+  
+  
+  output:
+    original_corners_dir: 'original_corners'
+    refined_corners_dir: 'refined_corners'
+    
+    intrinsics_filename: 'intrinsics.npz'
+    report_filename: 'calibration_report.txt'
+    
+
+  
+# Visualization Parameters
+visualization:
+  enabled: false
+  delay: 50  # milliseconds between displayed frames
+  save_frames: false
+
+# Debug Parameters
+debug:
+  enabled: false
+  path: "results/debug_visualizations"
+
+# Logging Parameters
+logging:
+  file: 'logs/log_intrinsics_camera_0.log'
+  max_bytes: 100000
+  backup_count: 10
+  level: "DEBUG" 
